@@ -8,10 +8,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 
 import Library.app.business.Book;
+import Library.app.business.CheckoutRecord;
 import Library.app.business.LibraryMember;
 import Library.app.exception.BookNotFoundException;
+import Library.app.exception.MemberNotFoundException;
 
 
 
@@ -19,7 +23,7 @@ import Library.app.exception.BookNotFoundException;
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS;
+		BOOKS, MEMBERS, USERS , CHECKOUT;
 	}
 	
 	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
@@ -58,10 +62,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	
-	/**
-	 * Save new book to storage
-	 * @param book
-	 */
+	
 	@Override
 	public void saveNewBook(Book book) {
 		HashMap<String,Book> bookMap = new HashMap<String, Book>();
@@ -75,26 +76,41 @@ public class DataAccessFacade implements DataAccess {
 	 */
 	@Override
 	public void updateBook(Book book) {
-		
-		
+		@SuppressWarnings("unchecked")
+		HashMap<String,Book> books =  (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
+		books.put(book.getIsbn(),book);
+		System.out.println(books);
 	}
 	
-	/**
-	 * 
-	 */
+	
 	@Override
-	public Book searchBook(String isbn) throws BookNotFoundException {
+	public void saveNewActivityRecord(CheckoutRecord checkoutRecord) {
+			HashMap<String,CheckoutRecord> activityRecord = new HashMap<String, CheckoutRecord>();
+			activityRecord.put(checkoutRecord.getCheckoutId(),checkoutRecord);
+			saveToStorage(StorageType.BOOKS,activityRecord);
+			
+	}
+	
+	@Override
+	public LibraryMember findLibraryMemberById(String memberId) throws MemberNotFoundException{
+		HashMap<String,LibraryMember> libraryMembers = (HashMap<String,LibraryMember>) readFromStorage(StorageType.MEMBERS);
+		if(libraryMembers.get(memberId) == null)
+			throw new MemberNotFoundException("Member not Available");
+		return libraryMembers.get(memberId);
+	}
+	
+	
+	
+	@Override
+	public Book findBookByIsbn(String isbn) throws BookNotFoundException {
 		
 		@SuppressWarnings("unchecked")
-		List<Book> books =  (List<Book>) readFromStorage(StorageType.BOOKS);
-		Book searchedBook = null;
-		for(Book book : books) {
-			if(book.getIsbn().equals(isbn))
-				searchedBook = book;		
-		}
-		if(searchedBook == null)
+		HashMap<String,Book> books =  (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
+		
+		if(books.get(isbn) == null)
 			throw new BookNotFoundException("Book not found");
-		return searchedBook;
+		
+		return books.get(isbn);
 	}
 	
 	
@@ -185,5 +201,16 @@ public class DataAccessFacade implements DataAccess {
 		}
 		private static final long serialVersionUID = 5399827794066637059L;
 	}
+
+
+
+	
+
+
+
+	
+
+
+
 	
 }
