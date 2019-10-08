@@ -47,13 +47,13 @@ public class SystemController implements ControllerInterface {
 	}
 	
 	/**
-	 * Add a new member to the system
+	 * Add a new Library member to the system
 	 * @param person
 	 */
 	@Override
-	public void createNewMember(Person person) {
-		// TODO Auto-generated method stub
-		
+	public void createNewLibraryMember(LibraryMember libraryMember) {
+		DataAccess da = new DataAccessFacade();
+		da.saveNewMember(libraryMember);
 	}
 	
 	

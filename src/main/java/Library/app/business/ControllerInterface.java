@@ -12,7 +12,7 @@ public interface ControllerInterface {
 	public void login(String id, String password) throws LoginException;
 	public List<String> allMemberIds();
 	public List<String> allBookIds();
-	public void createNewMember(Person person);
+	public void createNewLibraryMember(LibraryMember libraryMember);
 	public void addNewBook(Book book);
 	public void checkoutBook(int studentId,String ISBN) throws MemberNotFoundException,LibrarySystemException;
 	public void addBookCopy(Book book);
