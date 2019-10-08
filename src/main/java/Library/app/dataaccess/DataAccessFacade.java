@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import Library.app.business.Book;
 import Library.app.business.LibraryMember;
@@ -86,11 +87,11 @@ public class DataAccessFacade implements DataAccess {
 	public Book searchBook(String isbn) throws BookNotFoundException {
 		
 		@SuppressWarnings("unchecked")
-		List<Book> books =  (List<Book>) readFromStorage(StorageType.BOOKS);
+		HashMap<String,Book> books =  (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
 		Book searchedBook = null;
-		for(Book book : books) {
-			if(book.getIsbn().equals(isbn))
-				searchedBook = book;		
+		for(Entry<String, Book> b : books.entrySet()) {
+			if(b.getValue().getIsbn().equals(isbn))
+				searchedBook = b.getValue();
 		}
 		if(searchedBook == null)
 			throw new BookNotFoundException("Book not found");
