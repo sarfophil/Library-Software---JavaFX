@@ -19,11 +19,7 @@ public interface DataAccess {
 	 * @param member
 	 */
 	public void saveNewMember(LibraryMember member); 
-<<<<<<< HEAD
-	public Book searchBook(String isbn) throws BookNotFoundException;
-	public void updateBook(Book book);
-	void saveNewBook(Book book);
-=======
+
 	
 	/**
 	 * Save a new a book to the file database
@@ -58,5 +54,5 @@ public interface DataAccess {
 	 * @throws MemberNotFoundException 
 	 */
 	public LibraryMember findLibraryMemberById(String memberId) throws MemberNotFoundException;
->>>>>>> 285639047f7266a82b0c0d4c5009cc43c48211e5
+
 }
