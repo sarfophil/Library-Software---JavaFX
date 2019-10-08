@@ -1,7 +1,6 @@
 package Library.app.dataaccess;
 
 import java.util.HashMap;
-
 import Library.app.business.Book;
 import Library.app.business.CheckoutRecord;
 import Library.app.business.LibraryMember;
@@ -20,6 +19,7 @@ public interface DataAccess {
 	 * @param member
 	 */
 	public void saveNewMember(LibraryMember member); 
+
 	
 	/**
 	 * Save a new a book to the file database
@@ -54,4 +54,5 @@ public interface DataAccess {
 	 * @throws MemberNotFoundException 
 	 */
 	public LibraryMember findLibraryMemberById(String memberId) throws MemberNotFoundException;
+
 }
