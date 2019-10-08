@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="336.0" prefWidth="467.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <!-- TODO Add Nodes -->
+  <children>
+    <TextArea layoutX="123.0" layoutY="49.0" prefHeight="50.0" prefWidth="284.0" text="                                Welcome!&#10;                    Please login to proceed." wrapText="true" />
+    <Label layoutX="111.0" layoutY="133.0" text="User Name" />
+    <Label layoutX="111.0" layoutY="181.0" text="Password" />
+    <TextField fx:id="uid" layoutX="190.0" layoutY="127.0" prefWidth="200.0" />
+    <PasswordField fx:id="pass" layoutX="190.0" layoutY="178.0" prefWidth="200.0" />
+    <Button fx:id="login" layoutX="234.0" layoutY="240.0" mnemonicParsing="false" text="Login" />
+  </children>
+</AnchorPane>
