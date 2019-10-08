@@ -1,5 +1,6 @@
 package Library.app.business;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +10,10 @@ import Library.app.dataaccess.DataAccess;
 import Library.app.dataaccess.DataAccessFacade;
 import Library.app.dataaccess.User;
 import Library.app.exception.BookNotFoundException;
-import Library.app.exception.LibrarySystemException;
 import Library.app.exception.LoginException;
 import Library.app.exception.MemberNotFoundException;
+import Library.app.util.Util;
+import javafx.scene.control.Alert.AlertType;
 
 
 
@@ -70,13 +72,55 @@ public class SystemController implements ControllerInterface {
 	
 	/**
 	 * This method checkouts a book for a member
-	 * @param studentId
+	 * @param memberId
 	 * @param ISBN
 	 */
 	@Override
-	public void checkoutBook(int studentId, String ISBN) throws MemberNotFoundException, LibrarySystemException {
+	public void checkoutBook(String memberId, String ISBN , LocalDate dueDate, Double fine) {
+		DataAccess da = new DataAccessFacade();
 		
+		try {
+			Book book = da.findBookByIsbn(ISBN);
+			LibraryMember library = da.findLibraryMemberById(memberId);
+			BookCopy bookCopy  = findAvailableBook(book);
+			
+			//Tag the book copy as unavailable
+			bookCopy.changeAvailability();
+			
+			//Checkout entry
+			CheckoutRecordEntry entry = new CheckoutRecordEntry(LocalDate.now(), dueDate, fine);
+			
+			//Checkout Record
+			CheckoutRecord checkout = new CheckoutRecord(bookCopy,library,entry);
+			
+			da.saveNewActivityRecord(checkout);
+			
+			
+			Util.showAlertMessage(AlertType.INFORMATION, "Success", "Checkout Successful");
+			
+		} catch (BookNotFoundException e) {
+			Util.showAlertMessage(AlertType.WARNING,"Warning","Book is not available");
+		} catch (MemberNotFoundException e) {
+			Util.showAlertMessage(AlertType.WARNING,"Warning","Member is not in the system");
+			
+		}
 		
+	}
+	
+	/**
+	 * Find available copy of a book
+	 * @param bookCopies
+	 * @return
+	 */
+	private BookCopy findAvailableBook(Book bookCopies) {
+		BookCopy copy = null;
+		for(BookCopy bookCopy : bookCopies.getCopies()) {
+			if(bookCopy.isAvailable()) {
+				copy = bookCopy;
+				break;
+			}		
+		}
+		return copy;
 	}
 	
 	/**
@@ -87,13 +131,28 @@ public class SystemController implements ControllerInterface {
 	public void addBookCopy(Book book,String isbn) {
 		DataAccess da = new DataAccessFacade();
 		try {
-			Book readBook = da.searchBook(isbn);
+			Book readBook = da.findBookByIsbn(isbn);
 			readBook.addCopy();
+			
+			da.updateBook(readBook);
 		} catch (BookNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Util.showAlertMessage(AlertType.ERROR, "Error", "Book not found");
 		} 
 		
+	}
+	
+	@Override
+	public Boolean findAvailableBookCopy(String isbn) {
+		DataAccess da = new DataAccessFacade();
+		try {
+			Book book = da.findBookByIsbn(isbn);
+			BookCopy copy = this.findAvailableBook(book);
+			if(copy != null)
+				return true;
+		} catch (BookNotFoundException e) {
+			return false;
+		}
+		return false;
 	}
 	
 	
