@@ -15,6 +15,6 @@ public interface ControllerInterface {
 	public void createNewLibraryMember(LibraryMember libraryMember);
 	public void addNewBook(Book book);
 	public void checkoutBook(int studentId,String ISBN) throws MemberNotFoundException,LibrarySystemException;
-	public void addBookCopy(Book book);
+	public void addBookCopy(Book book,String isbn);
 	
 }

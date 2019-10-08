@@ -11,6 +11,7 @@ import java.util.List;
 
 import Library.app.business.Book;
 import Library.app.business.LibraryMember;
+import Library.app.exception.BookNotFoundException;
 
 
 
@@ -22,7 +23,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
-			+ "\\src\\dataaccess\\storage";
+			+ "\\src\\main\\java\\Library\\app\\dataaccess\\storage";
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations
@@ -54,6 +55,46 @@ public class DataAccessFacade implements DataAccess {
 		//Returns a Map with name/value pairs being
 		//   userId -> User
 		return (HashMap<String, User>)readFromStorage(StorageType.USERS);
+	}
+	
+	
+	/**
+	 * Save new book to storage
+	 * @param book
+	 */
+	@Override
+	public void saveNewBook(Book book) {
+		HashMap<String,Book> bookMap = new HashMap<String, Book>();
+		bookMap.put(book.getIsbn(),book);
+		saveToStorage(StorageType.BOOKS,bookMap);
+	}
+	
+	
+	/**
+	 * 
+	 */
+	@Override
+	public void updateBook(Book book) {
+		
+		
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public Book searchBook(String isbn) throws BookNotFoundException {
+		
+		@SuppressWarnings("unchecked")
+		List<Book> books =  (List<Book>) readFromStorage(StorageType.BOOKS);
+		Book searchedBook = null;
+		for(Book book : books) {
+			if(book.getIsbn().equals(isbn))
+				searchedBook = book;		
+		}
+		if(searchedBook == null)
+			throw new BookNotFoundException("Book not found");
+		return searchedBook;
 	}
 	
 	

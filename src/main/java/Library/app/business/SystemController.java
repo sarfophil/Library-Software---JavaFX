@@ -8,6 +8,7 @@ import Library.app.dataaccess.Auth;
 import Library.app.dataaccess.DataAccess;
 import Library.app.dataaccess.DataAccessFacade;
 import Library.app.dataaccess.User;
+import Library.app.exception.BookNotFoundException;
 import Library.app.exception.LibrarySystemException;
 import Library.app.exception.LoginException;
 import Library.app.exception.MemberNotFoundException;
@@ -63,8 +64,8 @@ public class SystemController implements ControllerInterface {
 	 */
 	@Override
 	public void addNewBook(Book book) {
-		// TODO Auto-generated method stub
-		
+		DataAccess da = new DataAccessFacade();
+		da.saveNewBook(book);	
 	}
 	
 	/**
@@ -74,7 +75,7 @@ public class SystemController implements ControllerInterface {
 	 */
 	@Override
 	public void checkoutBook(int studentId, String ISBN) throws MemberNotFoundException, LibrarySystemException {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	
@@ -83,8 +84,15 @@ public class SystemController implements ControllerInterface {
 	 * @param book
 	 */
 	@Override
-	public void addBookCopy(Book book) {
-		// TODO Auto-generated method stub
+	public void addBookCopy(Book book,String isbn) {
+		DataAccess da = new DataAccessFacade();
+		try {
+			Book readBook = da.searchBook(isbn);
+			readBook.addCopy();
+		} catch (BookNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		
 	}
 	
