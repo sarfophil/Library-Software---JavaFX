@@ -87,7 +87,7 @@ public class DataAccessFacade implements DataAccess {
 	public void saveNewActivityRecord(CheckoutRecord checkoutRecord) {
 			HashMap<String,CheckoutRecord> activityRecord = new HashMap<String, CheckoutRecord>();
 			activityRecord.put(checkoutRecord.getCheckoutId(),checkoutRecord);
-			saveToStorage(StorageType.BOOKS,activityRecord);
+			saveToStorage(StorageType.CHECKOUT,activityRecord);
 			
 	}
 	

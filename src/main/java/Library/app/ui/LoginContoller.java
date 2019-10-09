@@ -27,7 +27,7 @@ public class LoginContoller {
 	private void submit() throws IOException {
 		ControllerInterface c = new SystemController();
 		if(uid.getText().isEmpty() || pass.getText().isEmpty())
-			Util.showAlertMessage(AlertType.WARNING, "Authentication err", "Invalid Username / Password");
+			Util.showAlertMessage(AlertType.WARNING, "Authentication err", "Please provide your User Id / Password");
 		else {
 			try {
 				c.login(uid.getText(), pass.getText());
