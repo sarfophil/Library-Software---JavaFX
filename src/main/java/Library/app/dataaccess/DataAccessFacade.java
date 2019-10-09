@@ -87,7 +87,7 @@ public class DataAccessFacade implements DataAccess {
 	public void saveNewActivityRecord(CheckoutRecord checkoutRecord) {
 			HashMap<String,CheckoutRecord> activityRecord = new HashMap<String, CheckoutRecord>();
 			activityRecord.put(checkoutRecord.getCheckoutId(),checkoutRecord);
-			saveToStorage(StorageType.BOOKS,activityRecord);
+			saveToStorage(StorageType.CHECKOUT,activityRecord);
 			
 	}
 	
@@ -107,10 +107,14 @@ public class DataAccessFacade implements DataAccess {
 		@SuppressWarnings("unchecked")
 		HashMap<String,Book> books =  (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
 		
-		if(books.get(isbn) == null)
-			throw new BookNotFoundException("Book not found");
+		if(books != null) {
+			if(books.get(isbn) == null)
+				throw new BookNotFoundException("Book not found");
+			return books.get(isbn);
+		}
+			
 		
-		return books.get(isbn);
+		throw new BookNotFoundException("Book not found");
 	}
 	
 	

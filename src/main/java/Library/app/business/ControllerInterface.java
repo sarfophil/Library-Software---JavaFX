@@ -3,7 +3,9 @@ package Library.app.business;
 import java.time.LocalDate;
 import java.util.List;
 
+import Library.app.exception.BookNotFoundException;
 import Library.app.exception.LoginException;
+import Library.app.exception.MemberNotFoundException;
 
 
 
@@ -41,8 +43,31 @@ public interface ControllerInterface {
 	/**
 	 * Checks if a book has available copies.
 	 * @param isbn
-	 * @return
+	 * @return a boolean
 	 */
 	public Boolean findAvailableBookCopy(String isbn);
+	
+	/**
+	 * Retrieves a book
+	 * @param isbn
+	 * @return a Book object
+	 * @throws BookNotFoundException
+	 */
+	public Book findBookByIsbn(String isbn) throws BookNotFoundException;
+	
+	/**
+	 * Finds a member by the param: memberId
+	 * @param memberId
+	 * @return LibraryMember object
+	 * @throws MemberNotFoundException
+	 */
+	public LibraryMember findMemberById(String memberId)  throws MemberNotFoundException;
+	
+	/**
+	 * Count available books copies
+	 * @param book
+	 * @return number of available copies for a book
+	 */
+	public int countAvailableBooks(Book book);
 	
 }

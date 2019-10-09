@@ -20,7 +20,7 @@
     <TextField fx:id="numofcopies" layoutX="114.0" layoutY="233.0" prefWidth="186.0" />
     <Button fx:id="save" layoutX="44.0" layoutY="356.0" mnemonicParsing="false" onAction="#submit" text="Save" />
     <Button fx:id="cancle" layoutX="179.0" layoutY="356.0" mnemonicParsing="false" onAction="#back" text="Cancle" />
-    <TableView layoutX="338.0" layoutY="95.0" prefHeight="200.0" prefWidth="200.0">
+    <TableView fx:id="tableView" layoutX="338.0" layoutY="95.0" prefHeight="200.0" prefWidth="200.0">
       <columns>
         <TableColumn prefWidth="75.0" text="FirstName" />
         <TableColumn prefWidth="75.0" text="LastName" />
