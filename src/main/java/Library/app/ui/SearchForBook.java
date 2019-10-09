@@ -24,7 +24,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
