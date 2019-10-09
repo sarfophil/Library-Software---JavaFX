@@ -148,7 +148,7 @@ public class AddBookController {
 				if (!authorFirstName.getText().isEmpty() && !authorLastName.getText().isEmpty()
 						&& street.getText().isEmpty() && !city.getText().isEmpty() && !zip.getText().isEmpty()
 						&& !phoneNumber.getText().isEmpty() && !shortBio.getText().isEmpty()
-						&& !state.getText().isEmpty()) {
+						&& !state.getText().isEmpty() && !credentials.getSelectionModel().getSelectedItem().isEmpty() ) {
 
 					List<Author> authinfor = new ArrayList<>();
 					authinfor.add(new Author(authorFirstName.getText(), authorLastName.getText(), phoneNumber.getText(),
