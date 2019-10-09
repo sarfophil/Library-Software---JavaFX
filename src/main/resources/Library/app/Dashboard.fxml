@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="562.0" prefWidth="885.0" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="DashboardController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <MenuBar layoutX="0.0" layoutY="0.0" prefHeight="28.0" prefWidth="885.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Settings" />
+            <MenuItem mnemonicParsing="false" text="Exit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About" />
+            <MenuItem mnemonicParsing="false" text="Version" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Team" />
+      </menus>
+    </MenuBar>
+    <Text layoutX="32.0" layoutY="76.0" scaleX="1.5250174601376683" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="Book ISBN">
+      <font>
+        <Font size="15.0" fx:id="x2" />
+      </font>
+    </Text>
+    <TextField fx:id="isbnTf" layoutX="14.0" layoutY="95.0" onAction="#OnIsbn" prefHeight="39.0" prefWidth="279.0" />
+    <Text fx:id="memberIdTv" fill="BLACK" layoutX="319.0" layoutY="229.0" scaleX="1.185362483450347" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="Phil Sarfo">
+      <font>
+        <Font size="12.0" fx:id="x1" />
+      </font>
+    </Text>
+    <TextField id="memberIdTv" fx:id="memberIdTf" layoutX="14.0" layoutY="202.0" prefHeight="39.0" prefWidth="279.0" />
+    <Button layoutX="197.0" layoutY="265.0" mnemonicParsing="false" onAction="#search" prefHeight="39.0" prefWidth="96.0" text="Search" />
+    <Text id="bookTv" fx:id="bookResultTv" fill="BLACK" font="$x1" layoutX="351.0" layoutY="112.0" scaleX="1.2648168105183302" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="My experiment with Truth Lorem :  8 Available copies" textAlignment="CENTER" />
+    <Text font="$x2" layoutX="32.0" layoutY="184.0" scaleX="1.5250174601376683" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="Member ID" />
+    <Button id="addMemberBtn" layoutX="699.0" layoutY="75.0" mnemonicParsing="false" onAction="#addMember" prefHeight="76.43124389648438" prefWidth="161.0" style="" text="ADD MEMBER" />
+    <Button id="addMemberBtn" layoutX="699.0" layoutY="154.0" mnemonicParsing="false" onAction="#addbook" prefHeight="76.43124389648438" prefWidth="161.0" style="" text="ADD BOOK">
+      <stylesheets>
+        <URL value="@dark-theme.css" />
+      </stylesheets>
+    </Button>
+    <Button id="addMemberBtn" layoutX="699.0" layoutY="241.0" mnemonicParsing="false" onAction="#memberList" prefHeight="76.43124389648438" prefWidth="161.0" style="" text="MEMBER LIST">
+      <stylesheets>
+        <URL value="@dark-theme.css" />
+      </stylesheets>
+    </Button>
+    <Button id="addMemberBtn" layoutX="699.0" layoutY="348.0" mnemonicParsing="false" onAction="#booklist" prefHeight="76.43124389648438" prefWidth="161.0" style="" text="BOOK LIST">
+      <stylesheets>
+        <URL value="@dark-theme.css" />
+      </stylesheets>
+    </Button>
+    <Button fx:id="checkoutBtn" layoutX="314.0" layoutY="386.0" mnemonicParsing="false" onAction="#checkout" prefHeight="39.0" prefWidth="96.0" text="Checkout" />
+  </children>
+  <stylesheets>
+    <URL value="@dark-theme.css" />
+  </stylesheets>
+</AnchorPane>

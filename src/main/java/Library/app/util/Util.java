@@ -3,6 +3,7 @@
  */
 package Library.app.util;
 
+import Library.app.dataaccess.User;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -11,7 +12,7 @@ import javafx.scene.control.Alert.AlertType;
  *
  */
 public class Util {
-	
+	private static User user;
 	/**
 	 * Alert Module
 	 * @param alertType
@@ -23,6 +24,15 @@ public class Util {
 		alert.setTitle(title);
 		alert.setContentText(message);
 		alert.showAndWait();
+	}
+	
+	
+	public static User getCurrentPerson() {
+		return user;
+	}
+	
+	public static void setPerson(User user) {
+		Util.user = user;
 	}
 
 }
