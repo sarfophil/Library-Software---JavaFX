@@ -107,10 +107,14 @@ public class DataAccessFacade implements DataAccess {
 		@SuppressWarnings("unchecked")
 		HashMap<String,Book> books =  (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
 		
-		if(books.get(isbn) == null)
-			throw new BookNotFoundException("Book not found");
+		if(books != null) {
+			if(books.get(isbn) == null)
+				throw new BookNotFoundException("Book not found");
+			return books.get(isbn);
+		}
+			
 		
-		return books.get(isbn);
+		throw new BookNotFoundException("Book not found");
 	}
 	
 	

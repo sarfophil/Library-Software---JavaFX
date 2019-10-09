@@ -99,7 +99,6 @@ public class SystemController implements ControllerInterface {
 			da.saveNewActivityRecord(checkout);
 
 			Util.showAlertMessage(AlertType.INFORMATION, "Success", "Checkout Successful");
-
 		} catch (BookNotFoundException e) {
 			Util.showAlertMessage(AlertType.WARNING, "Warning", "Book is not available");
 		} catch (MemberNotFoundException e) {
