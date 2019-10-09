@@ -13,6 +13,6 @@
     <Label layoutX="93.0" layoutY="168.0" text="ISBN" />
     <TextField fx:id="id" layoutX="167.0" layoutY="120.0" prefWidth="200.0" />
     <TextField fx:id="isbn" layoutX="167.0" layoutY="165.0" prefWidth="200.0" />
-    <Button id="search" fx:id="checkout" layoutX="121.0" layoutY="247.0" mnemonicParsing="false" text="CheckOut" />
+    <Button id="search" fx:id="checkout" layoutX="121.0" layoutY="247.0" mnemonicParsing="false" onAction="#search" text="CheckOut" />
   </children>
 </AnchorPane>

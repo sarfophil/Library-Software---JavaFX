@@ -23,13 +23,10 @@ public class LoginContoller {
 	@FXML
 	private Button login;
 
-	
-		
-		
-
+	@FXML
 	private void submit() throws IOException {
 		ControllerInterface c = new SystemController();
-		if(uid.getText().isEmpty() || pass.getText().isEmpty())
+		if (uid.getText().isEmpty() || pass.getText().isEmpty())
 			Util.showAlertMessage(AlertType.WARNING, "Authentication err", "Invalid Username / Password");
 		else {
 			try {
