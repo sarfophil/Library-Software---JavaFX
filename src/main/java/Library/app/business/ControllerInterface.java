@@ -70,4 +70,30 @@ public interface ControllerInterface {
 	 */
 	public int countAvailableBooks(Book book);
 	
+	
+	/**
+	 * Searches for a checkout Record with member id
+	 * @param memberId
+	 * @return CheckoutRecord
+	 * @throws MemberNotFoundException
+	 */
+	public CheckoutRecord findCheckoutByMemberId(String memberId) throws MemberNotFoundException;
+	
+	/**
+	 * Add a copy book to book collection
+	 * @param book
+	 */
+	public void addBookToCollection(Book book);
+	
+	/**
+	 * Retrieves checkout activities by book id
+	 * @param copyBookId
+	 * @return
+	 */
+	public CheckoutRecord findCheckoutByBookCopyId(int copyBookId);
+	
+	
+	
+	
+	
 }

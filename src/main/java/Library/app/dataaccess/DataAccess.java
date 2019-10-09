@@ -54,5 +54,22 @@ public interface DataAccess {
 	 * @throws MemberNotFoundException 
 	 */
 	public LibraryMember findLibraryMemberById(String memberId) throws MemberNotFoundException;
+	
+	/**
+	 * Finds checkout records by member Id
+	 * @param memberId
+	 * @return
+	 * @throws MemberNotFoundException
+	 */
+	public CheckoutRecord findCheckoutRecordByMemberId(String memberId) throws MemberNotFoundException;
+	
+	/**
+	 * Find checkout record by book copy id
+	 * @param bookId
+	 * @return
+	 */
+	CheckoutRecord findCheckoutRecordByBookCopyId(int bookId);
+	
+	
 
 }

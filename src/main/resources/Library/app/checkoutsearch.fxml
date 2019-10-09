@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="288.0" prefWidth="442.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Library.app.ui.SearchMemberController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <TextField id="memberId" fx:id="memberTv" layoutX="102.0" layoutY="117.0" prefHeight="27.0" prefWidth="238.0" />
+    <Text layoutX="102.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Member Id" />
+    <Button layoutX="250.0" layoutY="160.0" mnemonicParsing="false" onAction="#search" prefHeight="27.0" prefWidth="90.0" text="Search" />
+    <Button cancelButton="false" defaultButton="true" layoutX="14.0" layoutY="24.0" mnemonicParsing="false" onAction="#onBack" prefHeight="27.0" prefWidth="90.0" text="Back" />
+  </children>
+</AnchorPane>
