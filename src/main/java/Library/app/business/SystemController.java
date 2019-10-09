@@ -163,7 +163,7 @@ public class SystemController implements ControllerInterface {
 		DataAccess da = new DataAccessFacade();
 		return da.findBookByIsbn(isbn);
 	}
-	
+
 	@Override
 	public LibraryMember findMemberById(String memberId) throws MemberNotFoundException {
 		DataAccess da = new DataAccessFacade();
@@ -172,11 +172,33 @@ public class SystemController implements ControllerInterface {
 
 	@Override
 	public int countAvailableBooks(Book book) {
-		int count  = 0;
-		for(BookCopy copy : book.getCopies())
-			if(copy.isAvailable())
-				count ++;
+		int count = 0;
+		for (BookCopy copy : book.getCopies())
+			if (copy.isAvailable())
+				count++;
 		return count;
+	}
+
+	@Override
+	public CheckoutRecord findCheckoutByMemberId(String memberId) throws MemberNotFoundException {
+		DataAccess da = new DataAccessFacade();
+		return da.findCheckoutRecordByMemberId(memberId);
+	}
+
+	@Override
+	public void addBookToCollection(Book book) {
+		DataAccess da = new DataAccessFacade();
+		book.addCopy();
+		da.updateBook(book);
+		Util.showAlertMessage(AlertType.CONFIRMATION, "Success", "Copy Added!");
+	}
+
+	@Override
+	public CheckoutRecord findCheckoutByBookCopyId(int copyBookId) {
+		DataAccess da = new DataAccessFacade();
+		CheckoutRecord record = da.findCheckoutRecordByBookCopyId(copyBookId);
+
+		return record;
 	}
 
 }

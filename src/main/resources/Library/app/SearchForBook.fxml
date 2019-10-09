@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="717.9999000000025" prefWidth="833.9999000000025" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Library.app.ui.SearchForBook">
+  <!-- TODO Add Nodes -->
+  <children>
+    <Label layoutX="260.0" layoutY="35.0" prefHeight="82.0" prefWidth="231.0" text="     Search for Book">
+      <font>
+        <Font size="25.0" />
+      </font>
+    </Label>
+    <Label layoutX="83.0" layoutY="152.0" prefHeight="41.0" prefWidth="74.0" text="ISBN" />
+    <TextField fx:id="isbn" layoutX="260.0" layoutY="158.0" prefWidth="231.0" text="" />
+    <Button layoutX="629.0" layoutY="158.0" mnemonicParsing="false" onAction="#search" text="Search" />
+    <TableView layoutX="28.0" layoutY="250.0" prefHeight="292.0" prefWidth="764.9998779296875" />
+  </children>
+</AnchorPane>

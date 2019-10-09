@@ -118,6 +118,28 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	
+	@Override
+	public CheckoutRecord findCheckoutRecordByMemberId(String memberId) throws MemberNotFoundException {
+		HashMap<String,CheckoutRecord> checkout = (HashMap<String,CheckoutRecord>) readFromStorage(StorageType.CHECKOUT);
+		for(Entry<String, CheckoutRecord> checkoutRecord : checkout.entrySet()) {
+			if(checkoutRecord.getValue().getLibraryMember().getMemberId().equals(memberId))
+				return checkoutRecord.getValue();
+		}
+		throw new MemberNotFoundException("Member Not Found");
+	}
+	
+	
+	@Override
+	public CheckoutRecord findCheckoutRecordByBookCopyId(int bookId) {
+		HashMap<String,CheckoutRecord> checkout = (HashMap<String,CheckoutRecord>) readFromStorage(StorageType.CHECKOUT);
+		for(Entry<String, CheckoutRecord> checkoutRecord : checkout.entrySet()) {
+			if(checkoutRecord.getValue().getBook().getCopyNum() == bookId)
+				return checkoutRecord.getValue();
+		}
+		return null;
+	}
+	
+	
 	/////load methods - these place test data into the storage area
 	///// - used just once at startup  
 	//static void loadMemberMap(List<LibraryMember> memberList) {
@@ -209,6 +231,10 @@ public class DataAccessFacade implements DataAccess {
 
 
 
+
+
+
+	
 
 
 
