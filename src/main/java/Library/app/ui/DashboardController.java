@@ -2,6 +2,7 @@ package Library.app.ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.DateTimeException;
 import java.util.ResourceBundle;
 
 import Library.app.App;
@@ -17,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -27,7 +27,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.util.Pair;
 
 public class DashboardController implements Initializable {
 
@@ -64,6 +63,11 @@ public class DashboardController implements Initializable {
 		bookResultTv.setText("");
 		memberIdTv.setText("");
 		checkoutBtn.setVisible(false);
+	}
+	
+	@FXML
+	private void goToCheckoutRecordPage() throws IOException {
+		App.setRoot("checkoutsearch");
 	}
 
 	@FXML
@@ -124,6 +128,46 @@ public class DashboardController implements Initializable {
 
 	}
 
+	@FXML 
+	private void bookCollection() {
+		Dialog<String> dialog = new Dialog<>();
+		dialog.setTitle("Add Book Copy");
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20, 150, 10, 10));
+		
+		TextField isbn = new TextField();
+		isbn.setPromptText("");
+		
+		Text status = new Text();
+		status.setText("");
+		
+		ButtonType buttonType = new ButtonType("Click to Add Copy",ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(buttonType, ButtonType.CANCEL);
+		
+		
+		grid.add(new Label("Isbn Number :"), 0, 0);
+		grid.add(isbn, 1, 0);
+		
+		
+		dialog.setResultConverter(dialogButton->{
+			if(!isbn.getText().isEmpty()) {
+				try {
+					Book book = controller.findBookByIsbn(isbn.getText());
+					controller.addBookToCollection(book);
+				} catch (BookNotFoundException e) {
+					Util.showAlertMessage(AlertType.INFORMATION, "Sorry", "Book Unavailable");
+				}
+			}
+			return null;
+		});
+		
+		dialog.showAndWait();
+		
+		
+	}
+	
 	@FXML
 	private void addMember() throws IOException {
 		App.setRoot("addmember");
@@ -146,7 +190,6 @@ public class DashboardController implements Initializable {
 
 	private void checkoutComponent() {
 		Dialog<String> dialog = new Dialog<>();
-//		alert.setTitle("Checkout Form");
 		dialog.setTitle("Checkout");
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
@@ -188,28 +231,32 @@ public class DashboardController implements Initializable {
 		ButtonType loginButtonType = new ButtonType("Checkout", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
-		Platform.runLater(() -> member.requestFocus());
+		
 
 		dialog.getDialogPane().setContent(grid);
 
 		dialog.setResultConverter(dialogButton -> {
 			switch (dialogButton.getButtonData()) {
 			case OK_DONE:
-				if (!member.getText().isEmpty() && !bookIsbn.getText().isEmpty() && picker.getValue() != null
-						&& !fine.getText().isEmpty()) {
-					try {
-						Double fineAmt = Double.parseDouble(fine.getText().toString());
-						controller.checkoutBook(libraryMember.getMemberId(), book.getIsbn(), picker.getValue(),
-								fineAmt);
+				try {
+					if (!member.getText().isEmpty() && !bookIsbn.getText().isEmpty() && picker.getValue() != null
+							&& !fine.getText().isEmpty()) {
+						try {
+							Double fineAmt = Double.parseDouble(fine.getText().toString());
+							controller.checkoutBook(libraryMember.getMemberId(), book.getIsbn(), picker.getValue(),
+									fineAmt);
+							resetDashboardUi();
+						} catch (NumberFormatException e) {
+							Util.showAlertMessage(AlertType.ERROR, "Warning", "Enter a valid amount");
+						}
 
-					} catch (NumberFormatException e) {
-						Util.showAlertMessage(AlertType.ERROR, "Warning", "Enter a valid amount");
+					} else {
+
+						Util.showAlertMessage(AlertType.CONFIRMATION, "Warning", "All inputs are required");
+
 					}
-
-				} else {
-
-					Util.showAlertMessage(AlertType.CONFIRMATION, "Warning", "All inputs are required");
-
+				}catch (DateTimeException e) {
+					Util.showAlertMessage(AlertType.WARNING, "Error", "Please pick a valid date");
 				}
 				break;
 			default:
@@ -222,6 +269,13 @@ public class DashboardController implements Initializable {
 
 		dialog.showAndWait();
 
+	}
+
+	private void resetDashboardUi() {
+		isbnTf.setText("");
+		memberIdTf.setText("");
+		memberIdTv.setText("");
+		checkoutBtn.setVisible(false);
 	}
 
 }
