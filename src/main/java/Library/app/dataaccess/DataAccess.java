@@ -42,7 +42,7 @@ public interface DataAccess {
 	public void updateBook(Book book);
 	
 	/**
-	 * Save a new checkout record to the file system
+	 * Persist a new checkout Activity Record
 	 * @param checkoutRecord
 	 */
 	public void saveNewActivityRecord(CheckoutRecord checkoutRecord);

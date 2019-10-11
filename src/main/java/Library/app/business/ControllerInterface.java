@@ -25,7 +25,7 @@ public interface ControllerInterface {
 	 */
 	public void addNewBook(Book book);
 	/**
-	 * Checkouts a book for student
+	 * Checkouts a book for a library Member
 	 * @param memberId
 	 * @param ISBN
 	 * @param dueDate

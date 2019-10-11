@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="ss" prefHeight="451.0" prefWidth="523.9999000000025" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Library.app.ui.AddBookCopyController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <Label layoutX="109.0" layoutY="40.0" prefHeight="42.0" prefWidth="175.0" text="          Add Book Copy">
+      <font>
+        <Font size="16.0" />
+      </font>
+    </Label>
+    <TextField id="Isbn" fx:id="isbnTF" layoutX="54.0" layoutY="122.0" prefWidth="296.0" />
+    <Label layoutX="54.0" layoutY="98.0" prefWidth="128.0" text="ISBN" />
+    <Button id="search" fx:id="searchBtn" layoutX="378.0" layoutY="122.0" mnemonicParsing="false" onAction="#search" text="Search" />
+    <Button id="addCopy" fx:id="addCopyBtn" layoutX="352.0" layoutY="282.0" mnemonicParsing="false" onAction="#add" prefHeight="42.0" text="Add Copy" />
+    <Button id="back" fx:id="backBtn" layoutX="22.0" layoutY="50.0" mnemonicParsing="false" onAction="#back" text="Back" />
+    <Text fx:id="resultStatus" layoutX="101.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+  </children>
+</AnchorPane>

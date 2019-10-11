@@ -72,12 +72,7 @@ public class SystemController implements ControllerInterface {
 		da.saveNewBook(book);
 	}
 
-	/**
-	 * This method checkouts a book for a member
-	 * 
-	 * @param memberId
-	 * @param ISBN
-	 */
+	
 	@Override
 	public void checkoutBook(String memberId, String ISBN, LocalDate dueDate, Double fine) {
 		DataAccess da = new DataAccessFacade();
@@ -88,7 +83,7 @@ public class SystemController implements ControllerInterface {
 			BookCopy bookCopy = findAvailableBook(book);
 
 			// Tag the book copy as unavailable
-			bookCopy.changeAvailability();
+			this.markBookAsUnavailable(book, bookCopy);
 
 			// Checkout entry
 			CheckoutRecordEntry entry = new CheckoutRecordEntry(LocalDate.now(), dueDate, fine);
@@ -106,6 +101,23 @@ public class SystemController implements ControllerInterface {
 
 		}
 
+	}
+	
+	/**
+	 * Marks a book copy as unavailable and persist data
+	 * @param book
+	 * @param bookCopy
+	 */
+	private void markBookAsUnavailable(Book book,BookCopy bookCopy) {
+		DataAccess da = new DataAccessFacade();
+		for(BookCopy copy : book.getCopies()) {
+			if(copy.getCopyNum() == bookCopy.getCopyNum())
+				//Change Status
+				copy.changeAvailability();
+		}
+		
+		//Save 
+		da.updateBook(book);
 	}
 
 	/**

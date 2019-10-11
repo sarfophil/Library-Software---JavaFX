@@ -8,31 +8,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="336.0" prefWidth="467.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Library.app.ui.LoginController">
+<AnchorPane prefHeight="492.0000999999975" prefWidth="550.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Library.app.ui.LoginController">
   <!-- TODO Add Nodes -->
   <children>
-    <Label layoutX="28.0" layoutY="92.0" text="User Id" />
-    <Label layoutX="33.0" layoutY="168.0" text="Password" />
-    <TextField fx:id="uid" layoutX="28.0" layoutY="118.0" prefHeight="25.271484375" prefWidth="200.0" />
-    <PasswordField fx:id="pass" layoutX="28.0" layoutY="188.0" prefHeight="25.271484375" prefWidth="200.0" />
-    <Button id="login" fx:id="loginBtn" layoutX="83.0" layoutY="240.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="77.0" text="Login">
+    <Label layoutX="22.0" layoutY="151.0" text="User Id" />
+    <Label layoutX="27.0" layoutY="227.0" text="Password" />
+    <TextField fx:id="uid" layoutX="22.0" layoutY="177.0" prefHeight="25.271484375" prefWidth="200.0" />
+    <PasswordField fx:id="pass" layoutX="22.0" layoutY="247.0" prefHeight="25.271484375" prefWidth="200.0" />
+    <Button id="login" fx:id="loginBtn" layoutX="77.0" layoutY="299.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="77.0" text="Login">
       <stylesheets>
         <URL value="@dark-theme.css" />
       </stylesheets>
     </Button>
     <Text layoutX="33.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LOGIN INTO YOUR ACCOUNT" textAlignment="CENTER">
       <font>
-        <Font size="15.0" />
+        <Font name="System Bold" size="15.0" />
       </font>
     </Text>
-    <Pane layoutX="253.0" layoutY="0.0" prefHeight="336.0" prefWidth="214.0" style="" styleClass="pane">
+    <Pane layoutX="253.0" layoutY="0.0" prefHeight="478.0001220703125" prefWidth="297.0" style="" styleClass="pane">
       <children>
-        <ImageView id="bookshelf.png" fitHeight="132.0" fitWidth="191.0" layoutX="9.0" layoutY="136.0">
+        <ImageView id="bookshelf.png" fitHeight="132.0" fitWidth="191.0" layoutX="53.0" layoutY="180.0">
           <image>
-            <Image url="@../../../../../../../Documents/bookshelf.png" preserveRatio="true" smooth="true" />
+            <Image url="@bookshelf.png" preserveRatio="true" smooth="true" />
           </image>
         </ImageView>
-        <Text layoutX="35.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Assitant" textAlignment="CENTER">
+        <Text layoutX="70.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Assitant" textAlignment="CENTER">
           <font>
             <Font name="System Bold" size="19.0" />
           </font>

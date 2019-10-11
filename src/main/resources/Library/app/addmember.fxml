@@ -6,33 +6,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="698.0" prefWidth="766.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Library.app.ui.AddMemberController">
+<AnchorPane minHeight="367.0" prefHeight="491.0" prefWidth="549.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Library.app.ui.AddMemberController">
   <!-- TODO Add Nodes -->
   <children>
-    <AnchorPane layoutX="40.0" layoutY="65.0" prefHeight="569.0" prefWidth="343.0">
-      <children>
-        <Label layoutX="40.0" layoutY="151.0" prefHeight="31.0" prefWidth="106.0" text="first name" />
-        <Label layoutX="40.0" layoutY="201.0" prefHeight="31.0" prefWidth="106.0" text="last name" />
-        <Label layoutX="40.0" layoutY="246.0" prefHeight="31.0" prefWidth="106.0" text="street" />
-        <Label layoutX="46.0" layoutY="285.0" prefHeight="31.0" prefWidth="106.0" text="city" />
-        <Label layoutX="40.0" layoutY="336.0" prefHeight="31.0" prefWidth="106.0" text="state" />
-        <Label layoutX="40.0" layoutY="386.0" text="zip" />
-        <Label layoutX="40.0" layoutY="424.0" text="phone number" />
-        <Button id="add" fx:id="addButton" layoutX="266.0" layoutY="510.0" mnemonicParsing="false" onAction="#add" text="Add" />
-      </children>
-    </AnchorPane>
-    <Label layoutX="248.0" layoutY="25.0" prefHeight="66.0" prefWidth="234.0" text="Add a New Member">
+    <Label layoutX="136.0" layoutY="16.0" prefHeight="66.0" prefWidth="234.0" text="Add a New Member" textAlignment="RIGHT" textOverrun="CLIP">
       <font>
-        <Font size="24.0" />
+        <Font size="15.0" />
       </font>
     </Label>
-    <TextField fx:id="firstname" layoutX="305.0" layoutY="216.0" prefWidth="242.0" />
-    <TextField fx:id="lastname" layoutX="307.0" layoutY="265.0" prefWidth="242.0" />
-    <TextField fx:id="street" layoutX="305.0" layoutY="313.0" prefWidth="242.0" />
-    <TextField fx:id="city" layoutX="306.0" layoutY="357.0" prefWidth="242.0" />
-    <TextField id="city" fx:id="state" layoutX="305.0" layoutY="402.0" prefWidth="242.0" />
-    <TextField fx:id="zip" layoutX="305.0" layoutY="446.0" prefWidth="242.0" />
-    <TextField fx:id="phonenumber" layoutX="305.0" layoutY="485.0" prefWidth="242.0" />
-    <Button id="back" fx:id="backButton" layoutX="482.0" layoutY="575.0" mnemonicParsing="false" onAction="#back" text="Back" />
+    <TextField fx:id="firstname" layoutX="134.0" layoutY="92.0" prefWidth="242.0" />
+    <TextField fx:id="lastname" layoutX="132.0" layoutY="140.0" prefWidth="242.0" />
+    <TextField fx:id="street" layoutX="134.0" layoutY="189.0" prefWidth="242.0" />
+    <TextField fx:id="city" layoutX="136.0" layoutY="232.0" prefWidth="242.0" />
+    <TextField id="city" fx:id="state" layoutX="132.0" layoutY="273.0" prefWidth="242.0" />
+    <TextField fx:id="zip" layoutX="134.0" layoutY="317.0" prefWidth="242.0" />
+    <TextField fx:id="phonenumber" layoutX="136.0" layoutY="361.0" prefWidth="242.0" />
+    <Button id="back" fx:id="backButton" layoutX="43.0" layoutY="38.0" mnemonicParsing="false" onAction="#back" text="Back" />
+    <Button id="add" fx:id="addButton" layoutX="211.0" layoutY="405.0" mnemonicParsing="false" onAction="#add" text="Add" />
+    <Label layoutX="43.0" layoutY="87.0" prefHeight="31.0" prefWidth="106.0" text="First name:" />
+    <Label layoutX="43.0" layoutY="131.0" prefHeight="31.0" prefWidth="90.0" text="Lastname:" />
+    <Label layoutX="43.0" layoutY="184.0" prefHeight="31.0" prefWidth="90.0" text="Street:" />
+    <Label layoutX="43.0" layoutY="228.0" prefHeight="31.0" prefWidth="90.0" text="City:" />
+    <Label layoutX="43.0" layoutY="273.0" prefHeight="31.0" prefWidth="106.0" text="State:" />
+    <Label layoutX="43.0" layoutY="312.0" prefHeight="31.0" prefWidth="106.0" text="Zip:" />
+    <Label layoutX="43.0" layoutY="356.0" prefHeight="31.0" prefWidth="106.0" text="Phonenumber:" />
   </children>
 </AnchorPane>

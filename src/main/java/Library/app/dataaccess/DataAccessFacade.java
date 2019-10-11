@@ -79,7 +79,7 @@ public class DataAccessFacade implements DataAccess {
 		@SuppressWarnings("unchecked")
 		HashMap<String,Book> books =  (HashMap<String,Book>) readFromStorage(StorageType.BOOKS);
 		books.put(book.getIsbn(),book);
-		System.out.println(books);
+		saveToStorage(StorageType.BOOKS,books);
 	}
 	
 	

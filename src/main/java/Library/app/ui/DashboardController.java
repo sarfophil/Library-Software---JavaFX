@@ -13,7 +13,6 @@ import Library.app.business.SystemController;
 import Library.app.exception.BookNotFoundException;
 import Library.app.exception.MemberNotFoundException;
 import Library.app.util.Util;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -26,6 +25,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class DashboardController implements Initializable {
@@ -46,8 +46,31 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private Button checkoutBtn;
+	
+	@FXML
+	private Text resultTitle;
 
-	private int searchedFlag;
+	
+	@FXML
+	private Text role;
+	
+	@FXML
+	private Button addMemberMenuBtn;
+	
+	@FXML
+	private Button addBookMenuBtn;
+	
+	@FXML
+	private Button checkoutMenuBtn;
+	
+	@FXML
+	private Button searchMenuBtn;
+	
+	@FXML
+	private Button addBookCollectionBtn;
+	
+	@FXML
+	private Pane checkoutPane;
 
 	private Book book;
 
@@ -55,14 +78,54 @@ public class DashboardController implements Initializable {
 
 	public DashboardController() {
 		controller = new SystemController();
-		searchedFlag = 0;
+	}
+	
+	@FXML
+	private void onLogout() throws IOException {
+		App.setRoot("login");
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		bookResultTv.setText("");
 		memberIdTv.setText("");
+		resultTitle.setText("");
 		checkoutBtn.setVisible(false);
+		role.setText("Current User:"+ Util.getCurrentPerson().getAuthorization().name());
+		this.hideUIMenu();
+		this.loadUIComponents();
+	}
+	
+	private void hideUIMenu() {
+		checkoutPane.setVisible(false);
+		addMemberMenuBtn.setVisible(false);
+		addBookMenuBtn.setVisible(false);
+		checkoutMenuBtn.setVisible(false);
+		searchMenuBtn.setVisible(false);
+		addBookCollectionBtn.setVisible(false);
+	}
+	
+	/* Determine User Role */
+	private void loadUIComponents(){
+		switch(Util.getCurrentPerson().getAuthorization()) {
+			case LIBRARIAN:
+				checkoutMenuBtn.setVisible(true);
+				searchMenuBtn.setVisible(true);
+				checkoutPane.setVisible(true);
+				break;
+			case ADMIN:
+				addMemberMenuBtn.setVisible(true);
+				addBookMenuBtn.setVisible(true);
+				addBookCollectionBtn.setVisible(true);
+				break;
+			case BOTH:
+				addMemberMenuBtn.setVisible(true);
+				addBookMenuBtn.setVisible(true);
+				checkoutMenuBtn.setVisible(true);
+				searchMenuBtn.setVisible(true);
+				addBookCollectionBtn.setVisible(true);
+				break;
+		}
 	}
 	
 	@FXML
@@ -72,18 +135,12 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private void OnIsbn() {
-		if (isbnTf.getText().isEmpty()) {
-			searchedFlag = 0;
-			checkoutBtn.setVisible(false);
-		}
+		
 	}
 
 	@FXML
 	private void onMemberIdInput() {
-		if (memberIdTf.getText().isEmpty()) {
-			searchedFlag = 0;
-			checkoutBtn.setVisible(false);
-		}
+		
 	}
 
 	@FXML
@@ -93,33 +150,31 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private void search() {
-		if (!memberIdTf.getText().toString().isEmpty() && !isbnTf.getText().toString().isEmpty()) {
+		if (!memberIdTf.getText().isEmpty() && !isbnTf.getText().isEmpty()) {
 			if (controller.findAvailableBookCopy(isbnTf.getText())) {
 				try {
 
 					// Library Member
 					libraryMember = controller.findMemberById(memberIdTf.getText());
-					memberIdTv.setText(libraryMember.getFirstName() + " " + libraryMember.getLastName());
+					memberIdTv.setText("Member Name: "+libraryMember.getFirstName() + " " + libraryMember.getLastName());
 
 					// Book
 					book = controller.findBookByIsbn(isbnTf.getText());
 					bookResultTv
-							.setText(book.getTitle() + ": Available Copies :" + controller.countAvailableBooks(book));
+							.setText("Book: "+ book.getTitle() + ": Available Copies : " + controller.countAvailableBooks(book) +" Copies");
 
+					//Title
+					resultTitle.setText("Result:");
+					
 					// Display Checkout Button
 					checkoutBtn.setVisible(true);
 
-					searchedFlag = 1;
-
 				} catch (MemberNotFoundException e) {
 					Util.showAlertMessage(AlertType.WARNING, "Response", "Member Not found");
-					searchedFlag = 0;
 				} catch (BookNotFoundException e) {
-					searchedFlag = 0;
 					Util.showAlertMessage(AlertType.WARNING, "Response", "Book Unavailable");
 				}
 			} else {
-				searchedFlag = 0;
 				Util.showAlertMessage(AlertType.WARNING, "Warning", "Book Unavailable");
 			}
 		} else {
@@ -129,43 +184,8 @@ public class DashboardController implements Initializable {
 	}
 
 	@FXML 
-	private void bookCollection() {
-		Dialog<String> dialog = new Dialog<>();
-		dialog.setTitle("Add Book Copy");
-		GridPane grid = new GridPane();
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(20, 150, 10, 10));
-		
-		TextField isbn = new TextField();
-		isbn.setPromptText("");
-		
-		Text status = new Text();
-		status.setText("");
-		
-		ButtonType buttonType = new ButtonType("Click to Add Copy",ButtonData.OK_DONE);
-		dialog.getDialogPane().getButtonTypes().addAll(buttonType, ButtonType.CANCEL);
-		
-		
-		grid.add(new Label("Isbn Number :"), 0, 0);
-		grid.add(isbn, 1, 0);
-		
-		
-		dialog.setResultConverter(dialogButton->{
-			if(!isbn.getText().isEmpty()) {
-				try {
-					Book book = controller.findBookByIsbn(isbn.getText());
-					controller.addBookToCollection(book);
-				} catch (BookNotFoundException e) {
-					Util.showAlertMessage(AlertType.INFORMATION, "Sorry", "Book Unavailable");
-				}
-			}
-			return null;
-		});
-		
-		dialog.showAndWait();
-		
-		
+	private void bookCollection() throws IOException {
+		App.setRoot("addBookCopy");	
 	}
 	
 	@FXML
@@ -177,17 +197,15 @@ public class DashboardController implements Initializable {
 	private void addbook() throws IOException {
 		App.setRoot("AddBook");
 	}
-
+	
 	@FXML
-	private void memberList() throws IOException {
-		App.setRoot("primary");
+	private void searchBookPage() throws IOException {
+		App.setRoot("SearchForBook");
 	}
 
-	@FXML
-	private void booklist() throws IOException {
-		App.setRoot("primary");
-	}
-
+	/*
+	 * Checkout Dialog Box
+	 */
 	private void checkoutComponent() {
 		Dialog<String> dialog = new Dialog<>();
 		dialog.setTitle("Checkout");
@@ -275,7 +293,10 @@ public class DashboardController implements Initializable {
 		isbnTf.setText("");
 		memberIdTf.setText("");
 		memberIdTv.setText("");
+		bookResultTv.setText("");
 		checkoutBtn.setVisible(false);
+		resultTitle.setText("");
+		
 	}
 
 }

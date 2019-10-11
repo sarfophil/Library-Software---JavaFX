@@ -52,16 +52,17 @@ public class AddMemberController {
 		if (firstname.getText().isEmpty() || lastname.getText().isEmpty()
 				|| street.getText().isEmpty() || city.getText().isEmpty() || state.getText().isEmpty()
 				|| zip.getText().isEmpty() || phonenumber.getText().isEmpty()) {
-			Util.showAlertMessage(AlertType.WARNING, "Autentication err", "Invalid member information");
+			Util.showAlertMessage(AlertType.WARNING, "Autentication err", "All Fields are required");
 		} else {
 			try {
+				Integer.parseInt(phonenumber.getText().toString());
 				Address add = new Address(street.getText(), street.getText(), state.getText(), zip.getText());
 				c.createNewLibraryMember(new LibraryMember(UUID.randomUUID().toString(), firstname.getText(),
 						lastname.getText(), phonenumber.getText(), add));
 				Util.showAlertMessage(AlertType.INFORMATION, "Success", "Member Created !");
 				this.resetForm();
-			} catch (Exception e) {
-				Util.showAlertMessage(AlertType.WARNING, "Warning", "Invalid member information");
+			} catch (NumberFormatException e) {
+				Util.showAlertMessage(AlertType.WARNING, "Warning", "Invalid Phone number");
 
 			}
 

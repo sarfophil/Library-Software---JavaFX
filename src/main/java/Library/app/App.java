@@ -19,7 +19,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("Login"));
         stage.setTitle("Library Assistant");
-
+        stage.setHeight(500);
+        stage.setWidth(550);
         stage.setScene(scene);
         stage.show();
     }

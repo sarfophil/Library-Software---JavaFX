@@ -7,10 +7,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="322.0" minWidth="524.7002563476562" prefHeight="506.0" prefWidth="524.7002563476562" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Library.app.ui.DashboardController">
+<AnchorPane minHeight="322.0" minWidth="511.00006103515625" prefHeight="501.0" prefWidth="550.0000610351562" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Library.app.ui.DashboardController">
   <!-- TODO Add Nodes -->
   <children>
-    <MenuBar layoutX="0.0" layoutY="0.0" prefHeight="28.0" prefWidth="524.7002563476562">
+    <MenuBar layoutX="0.0" layoutY="0.0" prefHeight="36.0" prefWidth="550.0">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -27,32 +27,35 @@
         <Menu mnemonicParsing="false" text="Team" />
       </menus>
     </MenuBar>
-    <Text layoutX="36.0" layoutY="106.0" scaleX="1.5250174601376683" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="Book ISBN">
-      <font>
-        <Font size="9.0" fx:id="x2" />
-      </font>
-    </Text>
-    <TextField fx:id="isbnTf" layoutX="21.0" layoutY="119.0" onAction="#OnIsbn" prefHeight="29.0" prefWidth="261.6000061035156" />
-    <TextField id="memberIdTv" fx:id="memberIdTf" layoutX="19.0" layoutY="188.0" prefHeight="29.0" prefWidth="261.9998779296875" />
-    <Button layoutX="17.0" layoutY="231.0" mnemonicParsing="false" onAction="#search" prefHeight="39.0" prefWidth="262.0" text="Search" />
-    <Text font="$x2" layoutX="34.0" layoutY="175.0" scaleX="1.5250174601376683" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="Member ID" />
-    <Button id="addMemberBtn" layoutX="345.0" layoutY="69.0" mnemonicParsing="false" onAction="#addMember" prefHeight="39.0" prefWidth="151.0" style="" text="ADD MEMBER" />
-    <Button id="addMemberBtn" layoutX="344.0" layoutY="119.0" mnemonicParsing="false" onAction="#addbook" prefHeight="39.0" prefWidth="151.00009999999747" style="" text="ADD BOOK" />
-    <Button id="addMemberBtn" layoutX="344.0" layoutY="169.0" mnemonicParsing="false" onAction="#goToCheckoutRecordPage" prefHeight="39.0" prefWidth="151.0" style="" text="CHECKOUT RECORDS" wrapText="true" />
-    <Button id="addMemberBtn" layoutX="346.0" layoutY="216.0" mnemonicParsing="false" onAction="#booklist" prefHeight="39.0" prefWidth="151.0" style="" text="BOOK LIST" />
-    <Pane focusTraversable="false" layoutX="14.0" layoutY="337.0" prefHeight="149.0" prefWidth="494.0">
+    <Button id="addMemberBtn" fx:id="addMemberMenuBtn" layoutX="374.0" layoutY="69.0" mnemonicParsing="false" onAction="#addMember" prefHeight="39.0" prefWidth="151.0" style="" text="ADD MEMBER" />
+    <Button id="addMemberBtn" fx:id="addBookMenuBtn" layoutX="373.0" layoutY="112.0" mnemonicParsing="false" onAction="#addbook" prefHeight="39.0" prefWidth="151.00009999999747" style="" text="ADD BOOK" />
+    <Button id="addMemberBtn" fx:id="checkoutMenuBtn" layoutX="371.0" layoutY="158.0" mnemonicParsing="false" onAction="#goToCheckoutRecordPage" prefHeight="61.0" prefWidth="151.0" style="" text="CHECKOUT RECORDS" textAlignment="CENTER" wrapText="true" />
+    <Button id="addMemberBtn" fx:id="searchMenuBtn" layoutX="374.0" layoutY="223.0" mnemonicParsing="false" onAction="#searchBookPage" prefHeight="39.0" prefWidth="151.0" style="" text="SEARCH BOOK" />
+    <Pane focusTraversable="false" layoutX="11.0" layoutY="299.0" prefHeight="149.0" prefWidth="525.0">
       <children>
-        <Text id="bookTv" fx:id="bookResultTv" fill="BLACK" layoutX="46.0" layoutY="27.0" scaleX="1.2648168105183302" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="My experiment with Truth Lorem :  8 Available copies" textAlignment="CENTER">
+        <Button fx:id="checkoutBtn" layoutX="316.0" layoutY="96.0" mnemonicParsing="false" onAction="#checkout" prefHeight="39.0" prefWidth="195.0" text="Checkout" />
+        <Text id="bookTv" fx:id="resultTitle" fill="BLACK" layoutX="21.0" layoutY="27.0" scaleX="1.4287788255595122" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" style="background: #000;" text="Result: " textAlignment="CENTER" underline="true">
           <font>
             <Font size="12.0" fx:id="x1" />
           </font>
         </Text>
-        <Text fx:id="memberIdTv" fill="BLACK" font="$x1" layoutX="21.0" layoutY="64.0" scaleX="1.185362483450347" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="Phil Sarfo" />
-        <Button fx:id="checkoutBtn" layoutX="384.0" layoutY="96.0" mnemonicParsing="false" onAction="#checkout" prefHeight="39.0" prefWidth="96.0" text="Checkout" />
+        <Text fx:id="memberIdTv" layoutX="10.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Member" />
+        <Text fx:id="bookResultTv" layoutX="10.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book Name" />
       </children>
     </Pane>
-    <Text font="$x1" layoutX="393.0" layoutY="53.0" scaleX="1.5250174601376683" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="MENU" />
-    <Text font="$x1" layoutX="45.0" layoutY="49.0" scaleX="1.5250174601376683" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard &gt; Search" />
-    <Button id="addMemberBtn" layoutX="344.0" layoutY="264.0" mnemonicParsing="false" onAction="#booklist" prefHeight="39.0" prefWidth="151.0" style="" text="ADD BOOK TO COLLECTION" textAlignment="CENTER" wrapText="true" />
+    <Text font="$x1" layoutX="55.0" layoutY="74.0" scaleX="1.5250174601376683" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard &gt; Search" />
+    <Button id="addMemberBtn" fx:id="addBookCollectionBtn" layoutX="372.0" layoutY="272.0" mnemonicParsing="false" onAction="#bookCollection" prefHeight="60.6312255859375" prefWidth="152.0" style="" text="ADD BOOK TO COLLECTION" textAlignment="CENTER" wrapText="true" />
+    <Text fx:id="role" layoutX="372.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role" />
+    <Pane fx:id="checkoutPane" layoutX="24.0" layoutY="89.0" prefHeight="210.0" prefWidth="317.0" />
+    <Text layoutX="64.0" layoutY="110.0" scaleX="1.5250174601376683" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="Book ISBN">
+      <font>
+        <Font size="9.0" fx:id="x2" />
+      </font>
+    </Text>
+    <TextField fx:id="isbnTf" layoutX="38.0" layoutY="124.0" onAction="#OnIsbn" prefHeight="29.0" prefWidth="261.6000061035156" />
+    <TextField id="memberIdTv" fx:id="memberIdTf" layoutX="36.0" layoutY="193.0" prefHeight="29.0" prefWidth="261.9998779296875" />
+    <Button layoutX="34.0" layoutY="236.0" mnemonicParsing="false" onAction="#search" prefHeight="39.0" prefWidth="262.0" text="Search" />
+    <Text font="$x2" layoutX="63.0" layoutY="179.0" scaleX="1.5250174601376683" scaleY="1.45354870288791" strokeType="OUTSIDE" strokeWidth="0.0" text="Member ID" />
+    <Button layoutX="274.0" layoutY="38.0" mnemonicParsing="false" onAction="#onLogout" text="Logout" />
   </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package Library.app.business;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,13 +16,26 @@ final public class Book implements Serializable {
 	private String isbn;
 	private String title;
 	private int maxCheckoutLength;
-	public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors) {
+	private int numberOfCopies;
+	
+	public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors,int numberOfCopies) {
 		this.isbn = isbn;
 		this.title = title;
 		this.maxCheckoutLength = maxCheckoutLength;
 		this.authors = Collections.unmodifiableList(authors);
-		copies = new BookCopy[]{new BookCopy(this, 1, true)};
+		copies = new BookCopy[numberOfCopies];
+		createCopies(numberOfCopies);
 		
+	}
+	
+	public void createCopies(int numberOfCopies) {
+		if(numberOfCopies > 0)
+			for(int i = 0,id = 1; i < copies.length; i++,id++) {
+				copies[i] = new BookCopy(this,id,true);
+			}
+		else {
+			copies = new BookCopy[]{new BookCopy(this, 1, true)};
+		}
 	}
 	
 	public void updateCopies(BookCopy copy) {
@@ -30,9 +44,16 @@ final public class Book implements Serializable {
 
 	
 	public List<Integer> getCopyNums() {
+		List<Integer> copyNums = new ArrayList<Integer>();
+		for(BookCopy bookCopy : copies) {
+			copyNums.add(bookCopy.getCopyNum());
+		}
+		return copyNums;
 		
-		return null;
-		
+	}
+	
+	public int getNumberOfCopies() {
+		return copies.length;
 	}
 	
 	public void addCopy() {
@@ -80,11 +101,18 @@ final public class Book implements Serializable {
 	}
 	
 	public BookCopy getNextAvailableCopy() {	
+		for(BookCopy copy : copies) {
+			if(copy.isAvailable())
+				return copy;
+		}
 		return null;
 	}
 	
 	public BookCopy getCopy(int copyNum) {
-		
+		for(BookCopy copy : copies) {
+			if(copy.getCopyNum() == copyNum)
+				return copy;
+		}
 		return null;
 	}
 	public int getMaxCheckoutLength() {

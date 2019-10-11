@@ -5,21 +5,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="475.0" prefWidth="464.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane minWidth="512.0" prefHeight="501.0" prefWidth="550.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Library.app.ui.AddBookController">
   <!-- TODO Add Nodes -->
   <children>
-    <TextArea layoutX="84.0" layoutY="24.0" prefHeight="63.0" prefWidth="254.0" text="                      Add New Book" wrapText="true" />
-    <Label layoutX="84.0" layoutY="127.0" text="ISBN" />
-    <Label layoutX="84.0" layoutY="159.0" text="Ttile" />
-    <Label layoutX="84.0" layoutY="192.0" text="Authors" />
-    <Label layoutX="84.0" layoutY="230.0" text="Checkout length" />
-    <Label layoutX="84.0" layoutY="260.0" prefWidth="100.0" text="Number of copies" />
-    <TextField fx:id="isbn" layoutX="211.0" layoutY="124.0" prefWidth="200.0" />
-    <TextField fx:id="title" layoutX="211.0" layoutY="159.0" prefWidth="200.0" />
-    <TextField fx:id="authors" layoutX="211.0" layoutY="192.0" prefWidth="200.0" />
-    <TextField fx:id="checkoutlength" layoutX="211.0" layoutY="230.0" prefWidth="200.0" />
-    <TextField fx:id="numofcopies" layoutX="211.0" layoutY="265.0" prefWidth="200.0" />
-    <Button fx:id="save" layoutX="144.0" layoutY="345.0" mnemonicParsing="false" onAction="#submit" text="Save" />
-    <Button fx:id="cancle" layoutX="272.0" layoutY="346.0" mnemonicParsing="false" text="Cancle" />
+    <TextArea layoutX="84.0" layoutY="24.0" prefHeight="44.0" prefWidth="254.0" text="                      Add New Book" wrapText="true" />
+    <Label layoutX="18.0" layoutY="97.0" text="ISBN" />
+    <Label layoutX="16.0" layoutY="132.0" text="Ttile" />
+    <Label layoutX="2.0" layoutY="168.0" text="CheckoutLength" />
+    <Label id="numcopies" layoutX="2.0" layoutY="203.0" prefWidth="100.0" text="Number of copies" />
+    <TextField fx:id="isbn" layoutX="118.0" layoutY="94.0" prefWidth="186.0" />
+    <TextField fx:id="title" layoutX="118.0" layoutY="129.0" prefWidth="186.0" />
+    <TextField fx:id="checkoutlength" layoutX="118.0" layoutY="168.0" prefWidth="186.0" />
+    <TextField fx:id="numofcopies" layoutX="118.0" layoutY="200.0" prefWidth="186.0" />
+    <Button fx:id="save" layoutX="317.0" layoutY="404.0" mnemonicParsing="false" onAction="#submit" text="Save" />
+    <Button fx:id="cancle" layoutX="435.0" layoutY="404.0" mnemonicParsing="false" onAction="#back" text="Cancle" />
+    <HBox alignment="BOTTOM_RIGHT" spacing="10.0" />
+    <Button fx:id="addauthor" layoutX="377.0" layoutY="81.0" mnemonicParsing="false" onAction="#addAuthors" text="Add Authors" />
+    <VBox fx:id="listPaneView" layoutX="327.0" layoutY="130.0" prefHeight="253.0" prefWidth="186.0" />
   </children>
 </AnchorPane>

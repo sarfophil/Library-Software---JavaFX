@@ -12,12 +12,7 @@ import Library.app.business.SystemController;
 import Library.app.exception.MemberNotFoundException;
 import Library.app.util.Util;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 
 /**
@@ -49,6 +44,11 @@ public class SearchMemberController {
 		}
 	}
 	
+	@FXML
+	private void back() throws IOException {
+		App.setRoot("SearchForBook");
+	}
+	
 	
 	@FXML
 	private void onBack() throws IOException {
@@ -56,38 +56,13 @@ public class SearchMemberController {
 	}
 	
 	private void displayResult(CheckoutRecord checkoutRecord) {
-		Dialog<String> dialog = new Dialog<>();
-		dialog.setTitle("Checkout Details");
-		GridPane grid = new GridPane();
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(20, 150, 10, 10));
+		String message = "Book Title : "+checkoutRecord.getBook().getBook().getTitle()+
+				"\n"+"Book Isb : "+checkoutRecord.getBook().getBook().getIsbn()+
+				"\n"+"Copy Id : "+ checkoutRecord.getBook().getCopyNum()+" Books"+
+				"\n"+"Member Name: "+ checkoutRecord.getLibraryMember().getFirstName()+" "+checkoutRecord.getLibraryMember().getLastName();
 		
-		Text bookTitle = new Text();
-		bookTitle.setText("Book Title :"+checkoutRecord.getBook().getBook().getTitle());
+		Util.showAlertMessage(AlertType.INFORMATION, "Checkout Info", message);
 		
-		Text bookIsbn = new Text();
-		bookTitle.setText("Book Isb :"+checkoutRecord.getBook().getBook().getIsbn());
-		
-		Text copyId = new Text();
-		bookTitle.setText("Copy Id :"+ checkoutRecord.getBook().getCopyNum());
-		
-		Text memberName = new Text();
-		memberName.setText("Member Name :"+ checkoutRecord.getLibraryMember().getFirstName()+" "+checkoutRecord.getLibraryMember().getLastName());
-		
-		
-		
-		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
-		
-		dialog.getDialogPane().setContent(grid);
-		
-		
-		grid.add(bookTitle, 0, 0);
-		grid.add(bookIsbn, 0, 1);
-		grid.add(copyId, 0, 2);
-		grid.add(memberName, 0, 3);
-		
-		dialog.showAndWait();
 	}
 
 }
