@@ -32,8 +32,10 @@ public class LoginController {
 	@FXML
 	private void login() throws IOException {
 		ControllerInterface c = new SystemController();
+
 		if(uid.getText().isEmpty() || pass.getText().isEmpty())
 			Util.showAlertMessage(AlertType.WARNING, "Authentication err", "Please provide your User Id / Password");
+
 		else {
 			try {
 				c.login(uid.getText(), pass.getText());
@@ -42,6 +44,7 @@ public class LoginController {
 				Util.showAlertMessage(AlertType.WARNING, "Authentication err", "Invalid Username / Password");
 			}
 		}
+
 	}
 
 }
