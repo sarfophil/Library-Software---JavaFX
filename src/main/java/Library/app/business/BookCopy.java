@@ -1,6 +1,7 @@
 package Library.app.business;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Immutable class
@@ -21,6 +22,7 @@ final public class BookCopy implements Serializable {
 	BookCopy(Book book, int copyNum) {
 		this.book = book;
 		this.copyNum = copyNum;
+		this.isAvailable = true;
 	}
 	
 	
@@ -38,7 +40,7 @@ final public class BookCopy implements Serializable {
 	}
 	
 	public void changeAvailability() {
-		isAvailable = !isAvailable;
+		isAvailable = false;
 	}
 	
 	@Override
@@ -48,5 +50,15 @@ final public class BookCopy implements Serializable {
 		BookCopy copy = (BookCopy)ob;
 		return copy.book.getIsbn().equals(book.getIsbn()) && copy.copyNum == copyNum;
 	}
+	
+	@Override
+		public int hashCode() {
+			return Objects.hash(book,copyNum,isAvailable);
+		}
+	
+	@Override
+		public String toString() {
+			return "Copy Id: "+copyNum+" Availability: "+isAvailable;
+		}
 	
 }

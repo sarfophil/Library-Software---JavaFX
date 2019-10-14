@@ -60,6 +60,15 @@ public class SearchForBook implements Initializable{
 	private TableColumn<BookCopyDatable,String> dueDateColumn;
 	
 	
+	@FXML
+	private TableColumn<BookCopyDatable,String> statusColumn;
+	
+	@FXML
+	private TableColumn<BookCopyDatable,String> overDueStatus;
+	
+
+	
+	
 	private ObservableList<BookCopyDatable> dataset;
 	
 	
@@ -98,8 +107,11 @@ public class SearchForBook implements Initializable{
 		copyNumberColumn.setCellValueFactory(new PropertyValueFactory<BookCopyDatable,String>("copyNumber"));
 		libraryMemberColumn.setCellValueFactory(new PropertyValueFactory<BookCopyDatable,String>("libraryMember"));
 		dueDateColumn.setCellValueFactory(new PropertyValueFactory<BookCopyDatable,String>("dueDate"));
+		statusColumn.setCellValueFactory(new PropertyValueFactory<BookCopyDatable, String>("status"));
+		overDueStatus.setCellValueFactory(new PropertyValueFactory<BookCopyDatable, String>("isDueStatus"));
 		
-		tableVw.getColumns().setAll(Arrays.asList(isbnColumn,bookTitleColumn,copyNumberColumn,libraryMemberColumn,dueDateColumn));
+		tableVw.getColumns().setAll(Arrays.asList(isbnColumn,bookTitleColumn,
+				copyNumberColumn,libraryMemberColumn,dueDateColumn,statusColumn,overDueStatus));
 		
 	}
 	
@@ -110,9 +122,9 @@ public class SearchForBook implements Initializable{
 			for(BookCopy bookCopy : book.getCopies()) {
 				
 				//Finding the library Member
-				CheckoutRecord record = controller.findCheckoutByBookCopyId(bookCopy.getCopyNum());
-				String libraryMember = "N/A";
-				String dueDate = "N/A";
+				CheckoutRecord record = controller.findCheckoutByBookCopyIdAndIsbn(bookCopy.getCopyNum(),bookCopy.getBook().getIsbn());
+				String libraryMember = "-";
+				String dueDate = "-";
 				if(record != null) {
 					libraryMember = record.getLibraryMember().getFirstName()+" "+record.getLibraryMember().getLastName();
 					dueDate = record.getCheckoutRecordEntry().getDueDate().toString();
@@ -125,8 +137,7 @@ public class SearchForBook implements Initializable{
 				bookDataTable.setLibraryMember(libraryMember);
 				bookDataTable.setDueDate(dueDate);
 				bookDataTable.setIsDueStatus(record == null?"":this.dueStatus(record));
-				
-				
+				bookDataTable.setStatus(bookCopy.isAvailable()?"Available":"Unavailable");
 				copies.add(bookDataTable);
 			}
 			return FXCollections.observableArrayList(copies);
@@ -139,13 +150,15 @@ public class SearchForBook implements Initializable{
 	
 	private String dueStatus(CheckoutRecord record) {
 		String status = "Overdue";
-		if(record.getCheckoutRecordEntry().getCheckoutDate().compareTo(LocalDate.now()) > 0) {
+		if(record.getCheckoutRecordEntry().getDueDate().compareTo(LocalDate.now()) > 0) {
 			status = "Not Overdue";
-		}else if(record.getCheckoutRecordEntry().getCheckoutDate().compareTo(LocalDate.now()) == 0) {
+		}else if(record.getCheckoutRecordEntry().getDueDate().compareTo(LocalDate.now()) == 0) {
 			status = "Overdue today";
 		}
 		return status;
 	}
+	
+	
 	
 	
 }

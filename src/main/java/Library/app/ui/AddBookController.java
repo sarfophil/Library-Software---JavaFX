@@ -2,8 +2,11 @@
 package Library.app.ui;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import Library.app.App;
 import Library.app.business.Address;
@@ -14,6 +17,7 @@ import Library.app.business.SystemController;
 import Library.app.util.Util;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -24,11 +28,12 @@ import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class AddBookController {
+public class AddBookController implements Initializable{
 
 	@FXML
 	private TextField isbn;
@@ -40,7 +45,7 @@ public class AddBookController {
 	private Button addauthor;
 
 	@FXML
-	private TextField checkoutlength;
+	private ComboBox<String> checkoutlength;
 
 	@FXML
 	private TextField numofcopies;
@@ -190,7 +195,8 @@ public class AddBookController {
 
 		ControllerInterface ci = new SystemController();
 
-		if (isbn.getText().isEmpty() || title.getText().isEmpty() || checkoutlength.getText().isEmpty()
+		if (isbn.getText().isEmpty() || title.getText().isEmpty() || 
+				checkoutlength.getSelectionModel().getSelectedItem().toString().isEmpty()
 				|| numofcopies.getText().isEmpty() || authorList.isEmpty()) {
 			Util.showAlertMessage(AlertType.WARNING, "Authentication err", "Field cannot be empty");
 
@@ -198,7 +204,7 @@ public class AddBookController {
 			try {
 
 				Integer numCopies = Integer.parseInt(numofcopies.getText().toString());
-				Integer checkoutLength = Integer.parseInt(checkoutlength.getText().toString());
+				Integer checkoutLength = checkoutlength.getSelectionModel().getSelectedItem().toString().equals("7 days")?7:21;
 
 				ci.addNewBook(new Book(isbn.getText(), title.getText(), checkoutLength, authorList,numCopies));
 				Util.showAlertMessage(AlertType.INFORMATION, "Success", "Book Added !");
@@ -216,6 +222,12 @@ public class AddBookController {
 
 		App.setRoot("dashboard");
 
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		checkoutlength.setItems(FXCollections.observableArrayList(Arrays.asList("21 days","7 days")));
+		
 	}
 }
 

@@ -1,14 +1,14 @@
 package Library.app.ui;
 
 import java.io.IOException;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import Library.app.App;
 import Library.app.business.Address;
 import Library.app.business.ControllerInterface;
 import Library.app.business.LibraryMember;
 import Library.app.business.SystemController;
-
 import Library.app.util.Util;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -56,10 +56,11 @@ public class AddMemberController {
 		} else {
 			try {
 				Integer.parseInt(phonenumber.getText().toString());
+				String memberId = "LB"+LocalDate.now().getDayOfYear()+LocalDateTime.now().getSecond();
 				Address add = new Address(street.getText(), street.getText(), state.getText(), zip.getText());
-				c.createNewLibraryMember(new LibraryMember(UUID.randomUUID().toString(), firstname.getText(),
+				c.createNewLibraryMember(new LibraryMember(memberId, firstname.getText(),
 						lastname.getText(), phonenumber.getText(), add));
-				Util.showAlertMessage(AlertType.INFORMATION, "Success", "Member Created !");
+				Util.showAlertMessage(AlertType.INFORMATION, "Success", "Member Created ! \n Library Member Id is "+memberId);
 				this.resetForm();
 			} catch (NumberFormatException e) {
 				Util.showAlertMessage(AlertType.WARNING, "Warning", "Invalid Phone number");

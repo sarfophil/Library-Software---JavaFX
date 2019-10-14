@@ -4,6 +4,7 @@
 package Library.app.business;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.UUID;
 
 /**
@@ -47,6 +48,23 @@ final public class CheckoutRecord implements Serializable{
 	public CheckoutRecordEntry getCheckoutRecordEntry() {
 		return checkoutRecordEntry;
 	}
+	
+	@Override
+	public String toString() {
+		String isDue = isDue()?"Not Overdue":"Overdue";
+		String result = String.format("%16s%32s%32s%16s%16s%16s%16s",checkoutId,book.getCopyNum(),book.getBook().getTitle(),book.getBook().getIsbn(),
+				checkoutRecordEntry.getCheckoutDate(),checkoutRecordEntry.getDueDate(),isDue);
+		return result;
+		
+	}
+	
+	public Boolean isDue() {
+		if(checkoutRecordEntry.getDueDate().compareTo(LocalDate.now()) < 0) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 	
 	

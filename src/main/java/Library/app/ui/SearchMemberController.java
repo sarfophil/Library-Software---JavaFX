@@ -4,6 +4,7 @@
 package Library.app.ui;
 
 import java.io.IOException;
+import java.util.List;
 
 import Library.app.App;
 import Library.app.business.CheckoutRecord;
@@ -34,14 +35,23 @@ public class SearchMemberController {
 	private void search() {
 		if(!memberTv.getText().isEmpty()) {
 			try {
-				CheckoutRecord checkoutRecord = controller.findCheckoutByMemberId(memberTv.getText());
-				this.displayResult(checkoutRecord);
+				List<CheckoutRecord> checkoutRecord = controller.findCheckoutByMemberId(memberTv.getText());
+				this.printConsoleTableHeader();
+				checkoutRecord.forEach(checkout->{
+					System.out.println(checkout);
+				});
+				Util.showAlertMessage(AlertType.INFORMATION, "Result", "Checkout Printed to console!");
 			} catch (MemberNotFoundException e) {
 				Util.showAlertMessage(AlertType.WARNING, "Response", "Member not Found");
 			}
 		}else {
 			Util.showAlertMessage(AlertType.WARNING, "Input Validation", "Please enter a member Id");
 		}
+	}
+	
+	private void printConsoleTableHeader() {
+		System.out.format("%32s%32s%16s%32s%16s%16s%16s", "Checkout Id","Book Id","Book Title","ISBN","Checkout Date","Due Date","Status");
+		System.out.println("\n");
 	}
 	
 	@FXML
@@ -55,14 +65,6 @@ public class SearchMemberController {
 		App.setRoot("Dashboard");
 	}
 	
-	private void displayResult(CheckoutRecord checkoutRecord) {
-		String message = "Book Title : "+checkoutRecord.getBook().getBook().getTitle()+
-				"\n"+"Book Isb : "+checkoutRecord.getBook().getBook().getIsbn()+
-				"\n"+"Copy Id : "+ checkoutRecord.getBook().getCopyNum()+" Books"+
-				"\n"+"Member Name: "+ checkoutRecord.getLibraryMember().getFirstName()+" "+checkoutRecord.getLibraryMember().getLastName();
-		
-		Util.showAlertMessage(AlertType.INFORMATION, "Checkout Info", message);
-		
-	}
+	
 
 }

@@ -111,9 +111,11 @@ public class SystemController implements ControllerInterface {
 	private void markBookAsUnavailable(Book book,BookCopy bookCopy) {
 		DataAccess da = new DataAccessFacade();
 		for(BookCopy copy : book.getCopies()) {
-			if(copy.getCopyNum() == bookCopy.getCopyNum())
+			if(copy.getCopyNum() == bookCopy.getCopyNum()) {
 				//Change Status
 				copy.changeAvailability();
+				System.out.println(copy);
+			}
 		}
 		
 		//Save 
@@ -192,7 +194,7 @@ public class SystemController implements ControllerInterface {
 	}
 
 	@Override
-	public CheckoutRecord findCheckoutByMemberId(String memberId) throws MemberNotFoundException {
+	public List<CheckoutRecord> findCheckoutByMemberId(String memberId) throws MemberNotFoundException {
 		DataAccess da = new DataAccessFacade();
 		return da.findCheckoutRecordByMemberId(memberId);
 	}
@@ -206,11 +208,20 @@ public class SystemController implements ControllerInterface {
 	}
 
 	@Override
-	public CheckoutRecord findCheckoutByBookCopyId(int copyBookId) {
+	public CheckoutRecord findCheckoutByBookCopyIdAndIsbn(int copyBookId,String isbn) {
 		DataAccess da = new DataAccessFacade();
-		CheckoutRecord record = da.findCheckoutRecordByBookCopyId(copyBookId);
+		CheckoutRecord record = da.findCheckoutRecordByBookCopyIdAndIsbn(copyBookId,isbn);
 
 		return record;
+	}
+
+	@Override
+	public Boolean checkLibraryCheckoutStatus(String libraryMemberId,Book book) {
+		DataAccess da = new DataAccessFacade();
+		if(da.checkLibraryMemberStatus(libraryMemberId,book)) {
+			return false;
+		}
+		return true;
 	}
 
 }

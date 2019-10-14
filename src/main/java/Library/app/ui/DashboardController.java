@@ -3,6 +3,7 @@ package Library.app.ui;
 import java.io.IOException;
 import java.net.URL;
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import Library.app.App;
@@ -20,7 +21,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -46,31 +46,31 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private Button checkoutBtn;
-	
+
 	@FXML
 	private Text resultTitle;
 
-	
 	@FXML
 	private Text role;
-	
+
 	@FXML
 	private Button addMemberMenuBtn;
-	
+
 	@FXML
 	private Button addBookMenuBtn;
-	
+
 	@FXML
 	private Button checkoutMenuBtn;
-	
+
 	@FXML
 	private Button searchMenuBtn;
-	
+
 	@FXML
 	private Button addBookCollectionBtn;
-	
+
 	@FXML
 	private Pane checkoutPane;
+	
 
 	private Book book;
 
@@ -79,10 +79,25 @@ public class DashboardController implements Initializable {
 	public DashboardController() {
 		controller = new SystemController();
 	}
-	
+
 	@FXML
 	private void onLogout() throws IOException {
 		App.setRoot("login");
+	}
+	
+	@FXML
+	private void MemberMenu() throws IOException{
+		
+	}
+	
+	@FXML
+	private void BookListMenu() throws IOException{
+		
+	}
+	
+	@FXML
+	private void CheckoutMenuList() throws IOException{
+		
 	}
 
 	@Override
@@ -91,11 +106,12 @@ public class DashboardController implements Initializable {
 		memberIdTv.setText("");
 		resultTitle.setText("");
 		checkoutBtn.setVisible(false);
-		role.setText("Current User:"+ Util.getCurrentPerson().getAuthorization().name());
+		role.setText("Current User:" + Util.getCurrentPerson().getAuthorization().name());
 		this.hideUIMenu();
 		this.loadUIComponents();
+		
 	}
-	
+
 	private void hideUIMenu() {
 		checkoutPane.setVisible(false);
 		addMemberMenuBtn.setVisible(false);
@@ -104,30 +120,30 @@ public class DashboardController implements Initializable {
 		searchMenuBtn.setVisible(false);
 		addBookCollectionBtn.setVisible(false);
 	}
-	
+
 	/* Determine User Role */
-	private void loadUIComponents(){
-		switch(Util.getCurrentPerson().getAuthorization()) {
-			case LIBRARIAN:
-				checkoutMenuBtn.setVisible(true);
-				searchMenuBtn.setVisible(true);
-				checkoutPane.setVisible(true);
-				break;
-			case ADMIN:
-				addMemberMenuBtn.setVisible(true);
-				addBookMenuBtn.setVisible(true);
-				addBookCollectionBtn.setVisible(true);
-				break;
-			case BOTH:
-				addMemberMenuBtn.setVisible(true);
-				addBookMenuBtn.setVisible(true);
-				checkoutMenuBtn.setVisible(true);
-				searchMenuBtn.setVisible(true);
-				addBookCollectionBtn.setVisible(true);
-				break;
+	private void loadUIComponents() {
+		switch (Util.getCurrentPerson().getAuthorization()) {
+		case LIBRARIAN:
+			checkoutMenuBtn.setVisible(true);
+			searchMenuBtn.setVisible(true);
+			checkoutPane.setVisible(true);
+			break;
+		case ADMIN:
+			addMemberMenuBtn.setVisible(true);
+			addBookMenuBtn.setVisible(true);
+			addBookCollectionBtn.setVisible(true);
+			break;
+		case BOTH:
+			addMemberMenuBtn.setVisible(true);
+			addBookMenuBtn.setVisible(true);
+			checkoutMenuBtn.setVisible(true);
+			searchMenuBtn.setVisible(true);
+			addBookCollectionBtn.setVisible(true);
+			break;
 		}
 	}
-	
+
 	@FXML
 	private void goToCheckoutRecordPage() throws IOException {
 		App.setRoot("checkoutsearch");
@@ -135,12 +151,12 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private void OnIsbn() {
-		
+
 	}
 
 	@FXML
 	private void onMemberIdInput() {
-		
+
 	}
 
 	@FXML
@@ -156,18 +172,30 @@ public class DashboardController implements Initializable {
 
 					// Library Member
 					libraryMember = controller.findMemberById(memberIdTf.getText());
-					memberIdTv.setText("Member Name: "+libraryMember.getFirstName() + " " + libraryMember.getLastName());
+					memberIdTv.setText(
+							"Member Name: " + libraryMember.getFirstName() + " " + libraryMember.getLastName());
 
 					// Book
 					book = controller.findBookByIsbn(isbnTf.getText());
-					bookResultTv
-							.setText("Book: "+ book.getTitle() + ": Available Copies : " + controller.countAvailableBooks(book) +" Copies");
+					bookResultTv.setText("Book: " + book.getTitle() + ": Available Copies : "
+							+ book.countAvailableCopies() + " Copies");
 
-					//Title
+					// Title
 					resultTitle.setText("Result:");
-					
+
 					// Display Checkout Button
-					checkoutBtn.setVisible(true);
+					if (book.countAvailableCopies() > 0) {
+						checkoutBtn.setVisible(true);
+					} else {
+						Util.showAlertMessage(AlertType.WARNING, "Warning", "Sorry, There are no copies available");
+					}
+
+					// Checks if Library Member has checked out this book already
+					if (!controller.checkLibraryCheckoutStatus(libraryMember.getMemberId(), book)) {
+						checkoutBtn.setVisible(false);
+						Util.showAlertMessage(AlertType.WARNING, "Warning",
+								"Library Member has checked out this book already");
+					}
 
 				} catch (MemberNotFoundException e) {
 					Util.showAlertMessage(AlertType.WARNING, "Response", "Member Not found");
@@ -175,7 +203,7 @@ public class DashboardController implements Initializable {
 					Util.showAlertMessage(AlertType.WARNING, "Response", "Book Unavailable");
 				}
 			} else {
-				Util.showAlertMessage(AlertType.WARNING, "Warning", "Book Unavailable");
+				Util.showAlertMessage(AlertType.WARNING, "Warning", "No book copy available");
 			}
 		} else {
 			Util.showAlertMessage(AlertType.WARNING, "Warning", "All Fields are required");
@@ -183,11 +211,11 @@ public class DashboardController implements Initializable {
 
 	}
 
-	@FXML 
+	@FXML
 	private void bookCollection() throws IOException {
-		App.setRoot("addBookCopy");	
+		App.setRoot("addBookCopy");
 	}
-	
+
 	@FXML
 	private void addMember() throws IOException {
 		App.setRoot("addmember");
@@ -197,7 +225,7 @@ public class DashboardController implements Initializable {
 	private void addbook() throws IOException {
 		App.setRoot("AddBook");
 	}
-	
+
 	@FXML
 	private void searchBookPage() throws IOException {
 		App.setRoot("SearchForBook");
@@ -224,8 +252,13 @@ public class DashboardController implements Initializable {
 		bookIsbn.setDisable(true);
 		bookIsbn.setText(book.getIsbn());
 
-		DatePicker picker = new DatePicker();
-		picker.setPromptText("Due Date");
+		TextField dueDate = new TextField();
+		dueDate.setPromptText("Due Date");
+		dueDate.setDisable(true);
+		dueDate.setPromptText(LocalDate.now().plusDays(book.getMaxCheckoutLength()).toString());
+		
+		Text checkoutLength = new Text();
+		checkoutLength.setText(String.valueOf(book.getMaxCheckoutLength())+" days");
 
 		TextField fine = new TextField();
 		fine.setPromptText("Fine Fee $");
@@ -237,7 +270,9 @@ public class DashboardController implements Initializable {
 		grid.add(bookIsbn, 1, 1);
 
 		grid.add(new Label("Due Date"), 0, 2);
-		grid.add(picker, 1, 2);
+		grid.add(dueDate, 1, 2);
+		
+		grid.add(checkoutLength, 2, 2);
 
 		grid.add(new Label("Fine Fee $"), 0, 3);
 		grid.add(fine, 1, 3);
@@ -249,19 +284,17 @@ public class DashboardController implements Initializable {
 		ButtonType loginButtonType = new ButtonType("Checkout", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
-		
-
 		dialog.getDialogPane().setContent(grid);
 
 		dialog.setResultConverter(dialogButton -> {
 			switch (dialogButton.getButtonData()) {
 			case OK_DONE:
 				try {
-					if (!member.getText().isEmpty() && !bookIsbn.getText().isEmpty() && picker.getValue() != null
+					if (!member.getText().isEmpty() && !bookIsbn.getText().isEmpty() && dueDate.getText().isEmpty()
 							&& !fine.getText().isEmpty()) {
 						try {
 							Double fineAmt = Double.parseDouble(fine.getText().toString());
-							controller.checkoutBook(libraryMember.getMemberId(), book.getIsbn(), picker.getValue(),
+							controller.checkoutBook(libraryMember.getMemberId(), book.getIsbn(),LocalDate.now().plusDays(book.getMaxCheckoutLength()),
 									fineAmt);
 							resetDashboardUi();
 						} catch (NumberFormatException e) {
@@ -273,7 +306,7 @@ public class DashboardController implements Initializable {
 						Util.showAlertMessage(AlertType.CONFIRMATION, "Warning", "All inputs are required");
 
 					}
-				}catch (DateTimeException e) {
+				} catch (DateTimeException e) {
 					Util.showAlertMessage(AlertType.WARNING, "Error", "Please pick a valid date");
 				}
 				break;
@@ -296,7 +329,7 @@ public class DashboardController implements Initializable {
 		bookResultTv.setText("");
 		checkoutBtn.setVisible(false);
 		resultTitle.setText("");
-		
+
 	}
 
 }

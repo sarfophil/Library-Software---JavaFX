@@ -77,7 +77,7 @@ public interface ControllerInterface {
 	 * @return CheckoutRecord
 	 * @throws MemberNotFoundException
 	 */
-	public CheckoutRecord findCheckoutByMemberId(String memberId) throws MemberNotFoundException;
+	public List<CheckoutRecord> findCheckoutByMemberId(String memberId) throws MemberNotFoundException;
 	
 	/**
 	 * Add a copy book to book collection
@@ -88,9 +88,18 @@ public interface ControllerInterface {
 	/**
 	 * Retrieves checkout activities by book id
 	 * @param copyBookId
+	 * @param isbn
 	 * @return
 	 */
-	public CheckoutRecord findCheckoutByBookCopyId(int copyBookId);
+	public CheckoutRecord findCheckoutByBookCopyIdAndIsbn(int copyBookId,String isbn);
+	
+	/**
+	 * Check a library Member Status by Checkout status for a book
+	 * @param libraryMemberId
+	 * @param book
+	 * @return false if user hasn't brought back the book and true if book has been returned
+	 */
+	public Boolean checkLibraryCheckoutStatus(String libraryMemberId,Book book);
 	
 	
 	

@@ -1,7 +1,10 @@
 package Library.app.dataaccess;
 
 import java.util.HashMap;
+import java.util.List;
+
 import Library.app.business.Book;
+import Library.app.business.BookCopy;
 import Library.app.business.CheckoutRecord;
 import Library.app.business.LibraryMember;
 import Library.app.exception.BookNotFoundException;
@@ -61,15 +64,22 @@ public interface DataAccess {
 	 * @return
 	 * @throws MemberNotFoundException
 	 */
-	public CheckoutRecord findCheckoutRecordByMemberId(String memberId) throws MemberNotFoundException;
+	public List<CheckoutRecord> findCheckoutRecordByMemberId(String memberId) throws MemberNotFoundException;
 	
 	/**
-	 * Find checkout record by book copy id
+	 * Find checkout record by book copy id and isbn
 	 * @param bookId
+	 * @param isbn
 	 * @return
 	 */
-	CheckoutRecord findCheckoutRecordByBookCopyId(int bookId);
+	CheckoutRecord findCheckoutRecordByBookCopyIdAndIsbn(int bookId,String isbn);
 	
-	
+	/**
+	 * Check library Member Status
+	 * @param libraryMember
+	 * @param book
+	 * @return boolean value
+	 */
+	public Boolean checkLibraryMemberStatus(String libraryMember,Book book);
 
 }
